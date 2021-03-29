@@ -1,0 +1,37 @@
+-- List of Artists and Albums By Amount
+
+SELECT count(Album.Title) AS 'Number of Albums', Artist.Name
+FROM Artist
+JOIN Album
+ON artist.ArtistId = Album.ArtistId
+GROUP BY Artist.ArtistId
+ORDER BY 1 DESC
+LIMIT 10;
+
+-- Total Spent by Country
+
+SELECT SUM(total) AS 'Total',Customer.Country AS 'Customer Country'
+FROM customer
+JOIN Invoice ON Invoice.CustomerId = Customer.CustomerId
+GROUP BY country
+ORDER BY 1 DESC
+LIMIT 10;
+
+-- Sales By Agents
+
+SELECT DISTINCT Employee.Title, Employee.FirstName, SUM(Invoice.Total) AS 'Total Sales', Employee.HireDate
+FROM Employee
+JOIN Customer On Customer.SupportRepId = Employee.EmployeeId
+JOIN Invoice ON Invoice.CustomerId = Customer.CustomerId
+Group By Employee.FirstName;
+
+-- Number of tracks per genre
+
+SELECT DISTINCT Genre.Name AS 'Genre Name', count(track.TrackId)'Total Tracks By Genre'
+FROM Genre
+JOIN Track ON Track.GenreId = Genre.GenreId
+JOIN Album ON Album.AlbumId = Track.AlbumId
+JOIN InvoiceLine ON InvoiceLine.TrackId = Track.TrackId
+Group By Genre.Name
+Order By count(track.Trackid) DESC
+LIMIT 10;
